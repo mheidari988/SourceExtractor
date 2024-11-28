@@ -16,6 +16,13 @@ Here's a comprehensive `README.md` file for your project:
 - Native AOT (Ahead-of-Time) compilation for fast execution and standalone binaries.
 
 ---
+## Download
+
+You can download the latest version of `srcx` from the link below:
+
+[Download srcx.exe](https://mheidari988.github.io/downloads/srcx.exe)
+
+---
 
 ## Installation
 
