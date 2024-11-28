@@ -96,6 +96,9 @@ class Program
 
     static void WriteDirectoryTree(string directoryPath, StreamWriter writer, string indent)
     {
+        // Skip bin and obj folders
+        if (IsExcludedFolder(directoryPath)) return;
+
         // Get all files in the current directory
         var files = Directory.GetFiles(directoryPath, "*.cs");
         foreach (var file in files)
@@ -107,6 +110,8 @@ class Program
         var subdirectories = Directory.GetDirectories(directoryPath);
         foreach (var subdirectory in subdirectories)
         {
+            if (IsExcludedFolder(subdirectory)) continue;
+
             string folderName = Path.GetFileName(subdirectory);
             writer.WriteLine($"{indent}{folderName}/");
             WriteDirectoryTree(subdirectory, writer, indent + "    ");
@@ -115,6 +120,9 @@ class Program
 
     static bool ProcessDirectory(string directoryPath, StreamWriter writer)
     {
+        // Skip bin and obj folders
+        if (IsExcludedFolder(directoryPath)) return false;
+
         bool hasFiles = false;
 
         // Get all .cs files in the current directory
@@ -129,6 +137,8 @@ class Program
         string[] subDirectories = Directory.GetDirectories(directoryPath);
         foreach (var subDirectory in subDirectories)
         {
+            if (IsExcludedFolder(subDirectory)) continue;
+
             if (ProcessDirectory(subDirectory, writer))
             {
                 hasFiles = true;
@@ -151,5 +161,11 @@ class Program
         writer.WriteLine($"// File: {relativePath}");
         writer.WriteLine(File.ReadAllText(filePath));
         writer.WriteLine(); // Add an empty line between files
+    }
+
+    static bool IsExcludedFolder(string path)
+    {
+        string folderName = Path.GetFileName(path).ToLowerInvariant();
+        return folderName == "bin" || folderName == "obj";
     }
 }
