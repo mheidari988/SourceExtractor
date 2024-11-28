@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SourceExtractor": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
